@@ -1,0 +1,6 @@
+/xrf/sample/clearTraces
+/xrf/sample/ppm U {conc}
+/run/reinitializeGeometry
+/run/physicsModified
+/analysis/setFileName out/matrix_{matrix}_U{conc}
+/run/beamOn 20000000

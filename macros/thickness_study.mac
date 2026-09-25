@@ -1,0 +1,14 @@
+# Self-absorption: U La intensity vs pellet thickness -> "infinite thickness" criterion.
+/control/verbose 1
+/run/numberOfThreads 8
+
+/xrf/sample/matrix phosphate
+/xrf/sample/density 2.0 g/cm3
+/xrf/sample/clearTraces
+/xrf/sample/ppm U 500
+/xrf/sample/thickness 1 mm
+
+/run/initialize
+/control/execute macros/source_xrf.mac
+
+/control/foreach macros/thick_loop.mac t "0.02 0.05 0.1 0.2 0.5 1 2 5"

@@ -1,0 +1,13 @@
+/run/initialize
+/control/execute macros/source_xrf.mac
+/vis/open
+/vis/drawVolume
+/vis/viewer/set/viewpointThetaPhi 90 90 deg
+/vis/viewer/set/style surface
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/set gamma yellow
+/vis/modeling/trajectories/drawByParticleID-0/set e- red
+/vis/scene/endOfEventAction accumulate 200
+/vis/scene/add/axes 0 0 0 10 mm
+# /run/beamOn 200

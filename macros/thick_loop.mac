@@ -1,0 +1,4 @@
+/xrf/sample/thickness {t} mm
+/run/reinitializeGeometry
+/analysis/setFileName out/thick_{t}mm
+/run/beamOn 20000000

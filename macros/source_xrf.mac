@@ -1,0 +1,11 @@
+# Monochromatic 30 keV X-ray beam, 1 mm radius, along +z onto the tilted pellet.
+# 30 keV excites U/Th L-shells (U L3 edge 17.17 keV), Sr K (16.1 keV) and Cd K (26.7 keV).
+# For a realistic tube spectrum, generate one with SpekPy and load it via /gps/ene/type Arb.
+/gps/particle gamma
+/gps/pos/type Plane
+/gps/pos/shape Circle
+/gps/pos/centre 0 0 -50 mm
+/gps/pos/radius 1 mm
+/gps/direction 0 0 1
+/gps/ene/type Mono
+/gps/ene/mono 30 keV

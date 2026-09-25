@@ -1,0 +1,21 @@
+# Matrix effect: U calibration curves in phosphate rock vs a light cellulose-binder matrix.
+# Only U is present so the comparison isolates the matrix.
+/control/verbose 1
+/run/numberOfThreads 8
+
+/xrf/sample/matrix phosphate
+/xrf/sample/density 2.0 g/cm3
+/xrf/sample/thickness 5 mm
+/xrf/sample/clearTraces
+/xrf/sample/ppm U 100
+
+/run/initialize
+/control/execute macros/source_xrf.mac
+
+/control/alias matrix phosphate
+/control/foreach macros/conc_loop.mac conc "100 250 500 1000 2000"
+
+/xrf/sample/matrix G4_CELLULOSE_CELLOPHANE
+/xrf/sample/density 1.3 g/cm3
+/control/alias matrix cellulose
+/control/foreach macros/conc_loop.mac conc "100 250 500 1000 2000"
