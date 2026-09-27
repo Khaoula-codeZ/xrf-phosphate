@@ -7,10 +7,8 @@
 /xrf/sample/density 2.0 g/cm3
 /xrf/sample/thickness 5 mm
 /xrf/sample/clearTraces
-/xrf/sample/ppm U 120
-/xrf/sample/ppm Th 10
-/xrf/sample/ppm Cd 30
-/xrf/sample/ppm Sr 1000
+/xrf/sample/ppm U 106
+/xrf/sample/ppm Cd 16
 
 /run/initialize
 /control/execute macros/source_xrf.mac

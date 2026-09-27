@@ -2,3 +2,4 @@ build/
 tstudy/
 out/
 __pycache__/
+.DS_Store

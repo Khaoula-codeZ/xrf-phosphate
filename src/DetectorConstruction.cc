@@ -24,30 +24,23 @@
 #include <vector>
 
 namespace {
-// Representative sedimentary phosphate rock, oxide wt% (renormalised in code).
-// PLACEHOLDER composition: replace with a real assay / published Moroccan
-// phosphorite data before quoting any absolute number.
+// Khouribga (Morocco) beneficiated phosphate rock, oxide wt%.
+// Source: Ryszko, Rusek & Kolodynska (2023), Materials 16, 793, Table 5 (sample PR5),
+// doi:10.3390/ma16020793. Renormalised in code (F reported without O-equivalent correction).
 struct Oxide { const char* el; G4int nEl; G4int nO; G4double wt; };
 const std::vector<Oxide> kPhosphateRock = {
-  {"Ca", 1, 1, 51.0},  // CaO
-  {"P",  2, 5, 31.5},  // P2O5
-  {"F",  1, 0,  3.8},  // F (fluorapatite)
-  {"C",  1, 2,  6.0},  // CO2 (carbonate)
-  {"Si", 1, 2,  3.0},  // SiO2
-  {"S",  1, 3,  1.5},  // SO3
-  {"Na", 2, 1,  0.9},  // Na2O
-  {"Mg", 1, 1,  0.5},  // MgO
-  {"Al", 2, 3,  0.5},  // Al2O3
-  {"Fe", 2, 3,  0.2},  // Fe2O3
-  {"K",  2, 1,  0.1},  // K2O
+  {"Ca", 1, 1, 55.8}, {"P", 2, 5, 31.2}, {"Si", 1, 2, 5.77}, {"F", 1, 0, 4.07},
+  {"S", 1, 3, 2.36}, {"Fe", 2, 3, 2.31}, {"Na", 2, 1, 0.60}, {"Al", 2, 3, 0.51},
+  {"Mg", 1, 1, 0.413}, {"K", 2, 1, 0.13}, {"Sr", 1, 1, 0.12},
 };
+
 }  // namespace
 
 DetectorConstruction::DetectorConstruction()
   : fDensity(2.0*g/cm3), fThickness(5.0*mm)
 {
   // default traces (ppm by mass) -- placeholders, override from macros
-  fTracePPM = {{"U", 120.}, {"Th", 10.}, {"Cd", 30.}, {"Sr", 1000.}};
+  fTracePPM = {{"U", 106.}, {"Cd", 16.}};   // Khouribga PR5, Ryszko et al. 2023
   fMessenger = new DetectorMessenger(this);
 }
 
