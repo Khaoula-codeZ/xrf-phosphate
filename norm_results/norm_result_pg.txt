@@ -1,0 +1,10 @@
+primaries                 20000000
+matrix                    pg
+decays per Ra-226 decay   3
+stack mass (kg)           1.257e+07
+kerma per decay (Gy)      2.8e-21 +/- 2.632e-23
+coef (nGy/h per Bq/kg)    0.38 +/- 0.003572
+UNSCEAR reference         0.462  (ratio 0.8225)
+Ra-226 in Jorf Lasfar PG  1097 Bq/kg
+dose rate at 1 m (nGy/h)  416.9 +/- 3.918
+annual external dose      0.5836 mSv/y  (2000 h/y, 0.7 Sv/Gy)

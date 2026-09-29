@@ -1,11 +1,13 @@
-# xrf-phosphate — Monte Carlo simulation of XRF/PIXE for trace uranium in phosphate ore
+# xrf-phosphate — Monte Carlo radiation physics for the Moroccan phosphate chain
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22958737.svg)](https://doi.org/10.5281/zenodo.22958737)
 
-A Geant4 model of energy-dispersive X-ray fluorescence (XRF) and particle-induced X-ray emission (PIXE)
-for quantifying trace radionuclides and heavy metals in Moroccan phosphate rock. It quantifies two
-effects that bias real trace-uranium assays: **matrix absorption** and **sample self-absorption**, and
-validates the transport model against analytical XRF theory.
+Geant4 models for two steps of the phosphate chain:
+
+1. **Ore analysis:** XRF and PIXE of Khouribga phosphate rock, quantifying the matrix-absorption and
+   self-absorption biases in trace-uranium assays, validated against analytical XRF theory.
+2. **Waste radioprotection (`norm/`):** external gamma dose rate above a Jorf Lasfar phosphogypsum stack
+   from the Ra-226 series, validated against the UNSCEAR dose-rate coefficient.
 
 ## Sample
 
@@ -22,7 +24,20 @@ SrO 0.12 wt% (renormalised), with U 106 ppm and Cd 16 ppm. Pressed-pellet densit
 - Detector resolution (Fano + electronic noise) applied in post-processing.
 - Each study point runs as an independent process with its own random seed.
 
-## Results
+## Results — ore analysis
+
+### Spectra: XRF and PIXE are complementary
+
+![XRF spectrum](figures/xrf_spectrum.png)
+
+30 keV XRF (10⁸ photons) resolves Ca, Fe, Sr and the trace lines of U (Lα, Lβ1, 106 ppm) and Cd (Kα,
+16 ppm); P Kα is fully absorbed by the matrix and Be window.
+
+![PIXE spectrum](figures/pixe_spectrum.png)
+
+3 MeV PIXE (2×10⁶ protons) shows the light majors, including P Kα, which XRF misses, because protons
+excite atoms close to the surface. The heavy traces are not detected at this proton fluence, consistent
+with the steep fall of K-shell ionisation cross sections with Z at 3 MeV.
 
 ### 1. Matrix effect on uranium calibration
 
@@ -49,6 +64,25 @@ The analytical thick-target attenuation depth, computed from tabulated mass-atte
 (xraydb) for the same matrix and geometry, is **τ = 156 µm**. The Monte Carlo value agrees within
 1.4σ (ratio 0.79), confirming that the transport model reproduces first-principles X-ray physics.
 
+## Results — phosphogypsum radioprotection (`norm/`)
+
+One Ra-226, Pb-214 or Bi-214 decay per event (secular equilibrium), with the full ENSDF gamma and X-ray
+spectrum from Geant4 radioactive decay, uniform in a 150 m radius × 1 m stack; air kerma is scored at
+1 m with a track-length estimator. Ra-226 activity of Jorf Lasfar phosphogypsum: 1097 Bq/kg
+(Chem. Eng. Sci. 2023).
+
+| Matrix | Dose-rate coefficient (nGy/h per Bq/kg) | Ratio to UNSCEAR (0.462) |
+|---|---|---|
+| Standard soil (Beck 1972), validation | 0.428 ± 0.004 | 0.93 |
+| Phosphogypsum (CaSO₄·2H₂O) | 0.412 ± 0.004 | 0.89 |
+
+- **Validation:** the soil coefficient agrees with UNSCEAR within 7%; the residual is explained by the
+  finite simulated air volume (a 3× smaller domain gave 0.390) and by the U-238, Th-234, Pa-234m and
+  Pb-210 members not included in the source.
+- **Phosphogypsum** gives a ~4% lower coefficient than soil (stronger photoabsorption by Ca and S).
+- **Jorf Lasfar stack:** **452 ± 4 nGy/h** at 1 m, i.e. **~0.63 mSv/y** external gamma dose for 2000 h/y
+  of occupancy (0.7 Sv/Gy). Radon and dust inhalation are not included.
+
 ## Build and run (Geant4 ≥ 11.0)
 
 ```bash
@@ -59,6 +93,13 @@ bash ../run_studies.sh   # matrix-effect + thickness studies
 python ../analysis/analyze.py matrix out
 python ../analysis/analyze.py thickness out
 python ../analysis/validate_selfabsorption.py out   # requires: pip install xraydb
+```
+
+NORM model:
+```bash
+cd norm && mkdir build && cd build && cmake .. && make -j
+NORM_BIG=1 NORM_MATRIX=soil ./norm macros/run.mac   # validation
+NORM_BIG=1 NORM_MATRIX=pg   ./norm macros/run.mac   # phosphogypsum
 ```
 
 Sample commands: `/xrf/sample/matrix`, `/xrf/sample/density`, `/xrf/sample/thickness`,
